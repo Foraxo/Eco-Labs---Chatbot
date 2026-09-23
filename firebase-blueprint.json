@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "Registro de una sesión de chat guardada en Firebase por los usuarios",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID único de la sesión"
+        },
+        "authorName": {
+          "type": "string",
+          "description": "Nombre o alias del compañero/usuario que inició el chat"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha y hora de creación ISO"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha y hora de última actualización ISO"
+        },
+        "modelUsed": {
+          "type": "string",
+          "description": "Modelo de Gemini utilizado"
+        },
+        "totalCost": {
+          "type": "number",
+          "description": "Costo total acumulado en USD"
+        },
+        "totalTokens": {
+          "type": "number",
+          "description": "Tokens totales consumidos"
+        },
+        "messageCount": {
+          "type": "number",
+          "description": "Cantidad de mensajes en la sesión"
+        },
+        "preview": {
+          "type": "string",
+          "description": "Texto del último mensaje o resumen"
+        },
+        "messages": {
+          "type": "array",
+          "description": "Lista de mensajes de la conversación"
+        }
+      },
+      "required": ["id", "authorName", "createdAt", "updatedAt", "modelUsed"]
+    },
+    "ChatLog": {
+      "title": "ChatLog",
+      "description": "Registro individual de cada interacción pregunta-respuesta",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID del mensaje"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "ID de la sesión a la que pertenece"
+        },
+        "authorName": {
+          "type": "string",
+          "description": "Nombre del usuario"
+        },
+        "query": {
+          "type": "string",
+          "description": "Pregunta del usuario"
+        },
+        "reply": {
+          "type": "string",
+          "description": "Respuesta generada por el bot"
+        },
+        "model": {
+          "type": "string",
+          "description": "Modelo Gemini utilizado"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Marca de tiempo ISO"
+        },
+        "latencyMs": {
+          "type": "number",
+          "description": "Latencia en milisegundos"
+        },
+        "tokens": {
+          "type": "number",
+          "description": "Tokens totales consumidos"
+        },
+        "costUsd": {
+          "type": "number",
+          "description": "Costo en USD"
+        }
+      },
+      "required": ["id", "sessionId", "authorName", "query", "reply", "model", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/chatSessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "Colección de sesiones de chat compartidas y guardadas"
+    },
+    "/chatLogs/{logId}": {
+      "schema": "ChatLog",
+      "description": "Colección de registros detallados de interacciones"
+    }
+  }
+}
